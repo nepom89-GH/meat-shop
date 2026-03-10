@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Meat Shop Ferdinand Steaks — Стейки премиум-класса</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Стриплойн, рибай Prime и Choice с честным весом и реальными фото. Выберите конкретный стейк по номеру и характеристикам." />
+
+  <link rel="icon" type="image/png" href="logo.png" />
+
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    (function() {
+      emailjs.init("YOUR_PUBLIC_KEY"); /* подставь свой public key */
+    })();
+  </script>
+
+  <style>
+    :root {
+      --primary: #8b0000;
+      --secondary: #d32f2f;
+      --accent: #f5c26b;
+      --light: #fff9f0;
+      --dark: #1a0a05;
+      --text-muted: #6f6f6f;
+      --border-radius: 12px;
+      --shadow-soft: 0 4px 16px rgba(0,0,0,0.12);
+    }
+    *{margin:0;padding:0;box-sizing:border-box;font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,"Roboto",sans-serif}
+    body{background:var(--light);color:var(--dark);line-height:1.6}
+    a{text-decoration:none;color:inherit}
+    img{max-width:100%;display:block}
+
+    header{
+      background:radial-gradient(circle at top left,#b22222,#1a0a05);
+      color:#fff;padding:16px 0 12px;position:sticky;top:0;z-index:100;
+      box-shadow:0 2px 10px rgba(0,0,0,0.35);
+    }
+    .container{width:94%;max-width:1200px;margin:0 auto}
+    .nav-bar{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .logo-block{display:flex;align-items:center;gap:10px}
+    .logo-mark{width:40px;height:40px;display:flex;align-items:center;justify-content:center}
+    .logo-mark img{max-width:100%;max-height:100%;object-fit:contain}
+    .logo-text-main{font-size:18px;font-weight:700;letter-spacing:0.02em}
+    .logo-text-sub{font-size:11px;opacity:.8}
+
+    .nav-links{display:flex;gap:18px;font-size:14px}
+    .nav-links a{position:relative;font-weight:500}
+    .nav-links a::after{
+      content:"";position:absolute;left:0;bottom:-4px;width:0;height:2px;
+      background:var(--accent);transition:width .25s ease;
+    }
+    .nav-links a:hover::after{width:100%}
+    .nav-actions{display:flex;align-items:center;gap:10px}
+    .nav-phone{font-size:14px;text-align:right}
+    .nav-phone strong{font-size:15px;white-space:nowrap}
+
+    .btn{
+      background:var(--primary);color:#fff;border:none;padding:9px 16px;
+      border-radius:20px;cursor:pointer;font-weight:600;font-size:14px;
+      transition:background .2s ease,transform .1s ease,box-shadow .2s ease;
+      box-shadow:0 2px 6px rgba(0,0,0,0.25);white-space:nowrap;
+    }
+    .btn:hover{background:#a50000;transform:translateY(-1px);box-shadow:0 3px 10px rgba(0,0,0,0.3)}
+    .btn:active{transform:translateY(0);box-shadow:0 1px 4px rgba(0,0,0,0.2)}
+    .btn-secondary{background:transparent;border:1px solid rgba(255,255,255,.6);box-shadow:none}
+    .btn-secondary:hover{background:rgba(0,0,0,.15);border-color:#fff}
+    .btn-small{padding:7px 12px;font-size:13px;border-radius:16px}
+
+    .hero{
+      background:linear-gradient(135deg,#1a0a05 0%,#2d1009 40%,#8b0000 100%);
+      color:#fff;padding:28px 0 30px;
+    }
+    .hero-inner{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:28px;align-items:center}
+    .hero-badge{
+      display:inline-flex;align-items:center;gap:8px;font-size:12px;padding:4px 10px;
+      border-radius:20px;background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.15);margin-bottom:10px;
+    }
+    .hero-badge span{
+      display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;
+      border-radius:50%;background:#f5c26b;color:#1a0a05;font-size:12px;font-weight:700;
+    }
+    .hero-title{font-size:30px;line-height:1.2;margin-bottom:10px}
+    .hero-subtitle{font-size:14px;max-width:420px;color:#f3e2d2;margin-bottom:16px}
+    .hero-features{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:18px}
+    .hero-feature-chip{
+      font-size:12px;padding:5px 11px;border-radius:16px;
+      background:rgba(0,0,0,0.45);border:1px solid rgba(255,255,255,0.18);
+    }
+    .hero-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
+    .hero-note{font-size:11px;color:#f3e2d2}
+
+    .hero-right{justify-self:center}
+    .hero-card{
+      background:rgba(0,0,0,.55);border-radius:18px;padding:14px;
+      box-shadow:0 8px 24px rgba(0,0,0,.65);max-width:320px;
+    }
+    .hero-card-title{font-size:15px;margin-bottom:10px;display:flex;justify-content:space-between;gap:8px}
+    .hero-card-title span:nth-child(2){font-size:12px;color:#f0d6b2;font-weight:500}
+    .hero-card-img{
+      height:160px;border-radius:12px;
+      background-image:url("SteaksF/IMG_20260310_203903.png"); /* любой стейк из набора[file:64] */
+      background-size:cover;background-position:center;margin-bottom:10px;
+      border:1px solid rgba(255,255,255,0.1);
+    }
+    .hero-card-meta{display:flex;justify-content:space-between;font-size:12px;color:#f3e2d2;margin-bottom:8px}
+    .hero-card-meta strong{color:#fff}
+    .hero-card-footer{font-size:11px;color:#f3e2d2}
+    .hero-pill{
+      background:rgba(0,0,0,.55);border-radius:999px;padding:6px 10px;font-size:11px;
+      display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(255,255,255,0.12);margin-top:10px;
+    }
+    .hero-pill-dot{width:7px;height:7px;border-radius:50%;background:#4caf50}
+
+    .section{padding:32px 0 28px}
+    .section.alt{background:#fffdf8}
+    .section-title{
+      font-size:22px;margin-bottom:6px;color:var(--secondary);position:relative;text-align:left;
+    }
+    .section-title::after{
+      content:"";position:absolute;left:0;bottom:-6px;width:56px;height:3px;border-radius:999px;
+      background:linear-gradient(90deg,var(--accent),var(--secondary));
+    }
+    .section-subtitle{font-size:13px;color:var(--text-muted);margin-bottom:18px}
+
+    .catalog-filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+    .filter-btn{
+      border:1px solid #e0cbb4;background:#fffaf4;border-radius:999px;
+      padding:6px 11px;font-size:12px;cursor:pointer;
+      transition:background .15s,border-color .15s,color .15s;
+    }
+    .filter-btn.active{background:var(--secondary);border-color:var(--secondary);color:#fff}
+    .catalog-note{font-size:12px;color:var(--text-muted);margin-bottom:14px}
+
+    .steaks-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:18px;
+    }
+    .steak-card{
+      background:#fff;border-radius:var(--border-radius);box-shadow:var(--shadow-soft);
+      overflow:hidden;display:flex;flex-direction:column;
+      transition:transform .18s,box-shadow .18s;
+    }
+    .steak-card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,0.16)}
+    .steak-img-wrap{position:relative;cursor:zoom-in}
+    .steak-img{width:100%;height:190px;object-fit:cover}
+    .steak-tag{
+      position:absolute;left:10px;top:10px;background:rgba(0,0,0,0.75);
+      color:#f5c26b;font-size:11px;padding:4px 9px;border-radius:999px;
+    }
+    .steak-info{padding:12px 14px 13px;display:flex;flex-direction:column;gap:4px}
+    .steak-name{font-size:15px;font-weight:700;margin-bottom:2px}
+    .steak-meta-row{display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted)}
+    .steak-comments{font-size:11px;color:var(--text-muted);margin-top:4px;min-height:28px}
+    .steak-bottom{margin-top:6px;display:flex;align-items:center;justify-content:space-between;gap:6px}
+    .steak-price-total{font-size:14px;font-weight:700}
+    .steak-price-total span{font-size:12px;font-weight:500;color:var(--text-muted)}
+
+    #cart{
+      position:fixed;right:14px;bottom:14px;width:320px;max-height:70vh;
+      background:#fff;border-radius:16px;box-shadow:0 10px 26px rgba(0,0,0,.4);
+      overflow:hidden;display:none;z-index:999;flex-direction:column;
+    }
+    #cart-header{
+      padding:10px 14px;background:#1a0a05;color:#fff;
+      display:flex;align-items:center;justify-content:space-between;font-size:14px;
+    }
+    #cart-header button{background:transparent;border:none;color:#f5f5f5;font-size:18px;cursor:pointer}
+    #cart-items{padding:10px 14px;overflow-y:auto;flex:1}
+    .cart-item{
+      display:flex;justify-content:space-between;align-items:center;
+      font-size:13px;padding:5px 0;border-bottom:1px solid #f1e5d8;
+    }
+    .cart-item:last-child{border-bottom:none}
+    .cart-item small{display:block;color:var(--text-muted);font-size:11px}
+    .cart-remove{background:none;border:none;color:var(--secondary);font-size:16px;cursor:pointer;padding-left:8px}
+    #cart-footer{padding:9px 14px 11px;border-top:1px solid #eee0d2;background:#fffaf4;font-size:13px}
+    .cart-totals{display:flex;justify-content:space-between;margin-bottom:8px}
+    .cart-totals div span{display:block;font-size:12px;color:var(--text-muted)}
+    #cart-toggle{position:fixed;right:16px;bottom:16px;z-index:998}
+
+    #order-form-section{
+      padding:28px 0 24px;background:#fffdf9;
+      border-top:1px solid #f1e1d2;border-bottom:1px solid #f1e1d2;
+    }
+    .form-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:24px;align-items:flex-start}
+    .form-group{margin-bottom:10px;font-size:13px}
+    .form-group label{display:block;margin-bottom:5px;font-weight:500}
+    .required-mark{color:#e53935;margin-left:3px}
+    input[type="text"],input[type="tel"],textarea,select{
+      width:100%;padding:9px 11px;border-radius:8px;border:1px solid #e0cbb4;
+      font-size:13px;outline:none;transition:border-color .18s,box-shadow .18s,background .18s;
+      background:#fffdf8;
+    }
+    input[type="text"]:focus,input[type="tel"]:focus,textarea:focus,select:focus{
+      border-color:var(--secondary);box-shadow:0 0 0 1px rgba(211,47,47,.15);background:#fff;
+    }
+    textarea{resize:vertical;min-height:60px}
+    .delivery-preview{
+      background:#fff7e4;border-radius:10px;padding:10px 12px;font-size:12px;
+      border:1px dashed #f0c276;margin-top:5px;
+    }
+    .delivery-preview strong{display:inline-block;margin-bottom:3px}
+    .hint{font-size:11px;color:var(--text-muted)}
+
+    .info-card{
+      background:#fff;border-radius:14px;box-shadow:var(--shadow-soft);
+      padding:14px 14px 12px;font-size:13px;border:1px solid #f0ddc7;
+    }
+    .info-card h3{font-size:15px;margin-bottom:6px;color:var(--secondary)}
+    .info-list{margin:0 0 6px;padding-left:16px}
+    .info-list li{margin-bottom:4px}
+    .badge-free{
+      display:inline-flex;align-items:center;gap:6px;font-size:11px;
+      background:#e3f6e3;color:#2e7d32;padding:4px 9px;border-radius:999px;margin-top:4px;
+    }
+    .badge-free span{width:7px;height:7px;border-radius:50%;background:#4caf50}
+
+    .columns-2{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:24px;align-items:flex-start}
+    .text-muted{color:var(--text-muted);font-size:13px}
+    .highlight-box{
+      background:#fff;border-radius:12px;padding:12px 14px;box-shadow:var(--shadow-soft);
+      font-size:13px;border:1px solid #f1dfc9;
+    }
+    .highlight-box h3{font-size:15px;margin-bottom:6px;color:var(--secondary)}
+    .icon-list{list-style:none;margin:0;padding:0;font-size:13px}
+    .icon-list li{margin-bottom:5px;display:flex;gap:8px}
+    .icon-list span{font-size:15px;width:18px;text-align:center}
+
+    footer{
+      background:#1a0a05;color:#eee0d0;padding:16px 0 14px;font-size:12px;
+    }
+    .footer-inner{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;align-items:center}
+    .footer-links{display:flex;flex-wrap:wrap;gap:12px}
+    .footer-links a{opacity:.85}
+
+    /* Лайтбокс */
+    .lightbox{
+      position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:2000;
+    }
+    .lightbox.active{display:flex}
+    .lightbox-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.8)}
+    .lightbox-content{
+      position:relative;z-index:1;max-width:900px;width:94%;background:#111;border-radius:12px;
+      padding:12px;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);
+      gap:14px;color:#f5f5f5;max-height:90vh;
+    }
+    .lightbox-image-wrap{
+      background:#000;border-radius:10px;overflow:hidden;max-height:80vh;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .lightbox-image-wrap img{max-width:100%;max-height:78vh;object-fit:contain}
+    .lightbox-caption{font-size:13px;display:flex;flex-direction:column;gap:6px}
+    .lightbox-caption #lightbox-title{font-weight:700;font-size:15px}
+    .lightbox-caption #lightbox-meta{font-size:12px;color:#ddd}
+    .lightbox-caption #lightbox-comments{font-size:12px;color:#ccc}
+    .lightbox-close,.lightbox-prev,.lightbox-next{
+      position:absolute;border:none;background:rgba(0,0,0,.6);color:#fff;cursor:pointer;
+      font-size:22px;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    }
+    .lightbox-close{top:8px;right:8px}
+    .lightbox-prev{left:8px;top:50%;transform:translateY(-50%)}
+    .lightbox-next{right:8px;top:50%;transform:translateY(-50%)}
+
+    @media(max-width:900px){
+      .hero-inner{grid-template-columns:minmax(0,1fr)}
+      .hero-right{order:-1}
+      .form-grid,.columns-2{grid-template-columns:minmax(0,1fr)}
+      #cart{right:8px;left:8px;width:auto;bottom:72px}
+      #cart-toggle{right:10px;bottom:10px}
+      .nav-links{display:none}
+      .nav-bar{align-items:flex-start}
+      .lightbox-content{grid-template-columns:minmax(0,1fr);max-height:90vh}
+      .lightbox-prev,.lightbox-next{top:auto;bottom:8px}
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="container nav-bar">
+    <div class="logo-block">
+      <div class="logo-mark">
+        <img src="logo.png" alt="Meat Shop Ferdinand Steaks">
+      </div>
+      <div>
+        <div class="logo-text-main">Meat Shop Ferdinand Steaks</div>
+        <div class="logo-text-sub">стейки премиум-класса • Москва</div>
+      </div>
+    </div>
+    <nav class="nav-links">
+      <a href="#catalog">Каталог</a>
+      <a href="#delivery">Доставка</a>
+      <a href="#about">О нас</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <div class="nav-actions">
+      <div class="nav-phone">
+        <div>Заказы c 10:00 до 21:00</div>
+        <strong>+7 (999) 123-45-67</strong>
+      </div>
+      <button id="nav-open-cart" class="btn btn-secondary">Корзина (<span id="cart-count-top">0</span>)</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container hero-inner">
+    <div>
+      <div class="hero-badge"><span>✓</span> Стейки на фото — реальные, с вашим весом</div>
+      <h1 class="hero-title">Стриплойн и рибай, как в стейк-хаусе, но у вас дома</h1>
+      <p class="hero-subtitle">
+        Выбирайте конкретный стейк по номеру, весу и мраморности. Все фото сделаны с реальных кусков — без стока и «примерных» картинок.
+      </p>
+      <div class="hero-features">
+        <div class="hero-feature-chip">Ribeye Prime и Choice</div>
+        <div class="hero-feature-chip">Стриплойн с разной мраморностью</div>
+        <div class="hero-feature-chip">Честный вес и прозрачная цена</div>
+      </div>
+      <div class="hero-actions">
+        <button class="btn" onclick="scrollToCatalog()">Выбрать стейк</button>
+        <button class="btn btn-secondary" onclick="scrollToDelivery()">Условия доставки</button>
+      </div>
+      <div class="hero-note">
+        Минимальный заказ — 1 стейк. Перед оплатой вы получаете фото/видео выбранных стейков на весах.
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-card">
+        <div class="hero-card-title">
+          <span>Пример стейка из партии</span>
+          <span>вы увидите именно такие куски</span>
+        </div>
+        <div class="hero-card-img"></div>
+        <div class="hero-card-meta">
+          <div>Вес: <strong>~0.4–0.8 кг</strong></div>
+          <div>Категория: <strong>Ribeye Choice / Prime</strong></div>
+        </div>
+        <div class="hero-card-footer">
+          После заявки мы соберём для вас подборку по вашим пожеланиям (толщина, мраморность, вес) и согласуем заказ в мессенджере.
+        </div>
+      </div>
+      <div class="hero-pill">
+        <div class="hero-pill-dot"></div>
+        В наличии сейчас: <span id="hero-available-count">—</span> стейков
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="catalog">
+  <div class="container">
+    <h2 class="section-title">Каталог стейков</h2>
+    <p class="section-subtitle">
+      Все позиции ниже подтягиваются из файла steaks.json. Номера, веса, цены и описания уже совпадают с вашей таблицей и фотографиями.
+    </p>
+
+    <div class="catalog-filters">
+      <button class="filter-btn active" data-category="all">Все стейки</button>
+      <button class="filter-btn" data-category="striploin_choice">Стриплойн</button>
+      <button class="filter-btn" data-category="ribeye_choice">Ribeye Choice</button>
+      <button class="filter-btn" data-category="ribeye_prime">Ribeye Prime</button>
+      <!-- при появлении других категорий (filet_mignon, everyday) их можно добавить здесь -->
+    </div>
+    <div class="catalog-note" id="category-note"></div>
+
+    <div id="steaks-container" class="steaks-grid">
+      <p>Загрузка ассортимента...</p>
+    </div>
+  </div>
+</section>
+
+<section id="order-form-section">
+  <div class="container">
+    <h2 class="section-title">Оформление заказа</h2>
+    <p class="section-subtitle">
+      Добавьте стейки в корзину, оставьте контакты и удобный способ получения. Мы свяжемся, подтвердим наличие и отправим итоговую подборку.
+    </p>
+    <div class="form-grid">
+      <div>
+        <div class="form-group">
+          <label>Ваше имя<span class="required-mark">*</span></label>
+          <input type="text" id="customer-name" placeholder="Как к вам обращаться" />
+        </div>
+        <div class="form-group">
+          <label>Телефон<span class="required-mark">*</span></label>
+          <input type="tel" id="customer-phone" placeholder="+7 (___) ___-__-__" />
+        </div>
+        <div class="form-group">
+          <label>Тип получения<span class="required-mark">*</span></label>
+          <select id="delivery-type">
+            <option value="courier">Курьером по Москве и МО</option>
+            <option value="pickup">Самовывоз (м. Тверская)</option>
+          </select>
+        </div>
+        <div id="courier-fields">
+          <div class="form-group">
+            <label>Адрес доставки<span class="required-mark">*</span></label>
+            <textarea id="delivery-address" placeholder="Город, улица, дом, подъезд, домофон, этаж"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Комментарий курьеру</label>
+            <textarea id="delivery-comment" placeholder="Ориентиры, удобное время..."></textarea>
+          </div>
+          <div class="delivery-preview">
+            <strong>Стоимость доставки:</strong>
+            <div id="delivery-cost-text">зависит от адреса и веса заказа, окончательную сумму подтвердим перед оплатой.</div>
+          </div>
+        </div>
+        <div id="pickup-fields" style="display:none;">
+          <div class="delivery-preview">
+            <strong>Самовывоз:</strong>
+            <div>Москва, ул. Тверская, 15 (м. Тверская).</div>
+            <div>Ежедневно с 10:00 до 21:00.</div>
+            <div class="badge-free"><span></span> Самовывоз бесплатный.</div>
+          </div>
+        </div>
+        <div class="form-group" style="margin-top:12px;">
+          <button id="submit-order" class="btn" style="width:100%;">Отправить заявку</button>
+          <div class="hint" style="margin-top:4px;">
+            Заявка придёт вам на почту через EmailJS. При ошибке мы покажем текст заказа, который можно вручную отправить в мессенджер.
+          </div>
+        </div>
+        <div id="order-result" style="margin-top:8px;font-size:13px;"></div>
+      </div>
+      <aside class="info-card">
+        <h3>Как это работает</h3>
+        <ul class="info-list">
+          <li>Выбираете стейки по номеру, весу и описанию.</li>
+          <li>Мы подтверждаем наличие и присылаем фото/видео именно этих кусков.</li>
+          <li>После согласования суммы отправляем ссылку на оплату и организуем доставку.</li>
+        </ul>
+        <p>
+          Номера в каталоге (например, «Ribeye Prime #529» или «Стриплойн #347») совпадают с теми, что у вас в Excel — поэтому легко сверяться с исходной таблицей.[file:64]
+        </p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="delivery">
+  <div class="container columns-2">
+    <div>
+      <h2 class="section-title">Условия доставки</h2>
+      <p class="section-subtitle">
+        Доставляем по Москве и ближайшему Подмосковью. Точная стоимость зависит от адреса и веса заказа.
+      </p>
+      <div class="highlight-box">
+        <h3>Курьер</h3>
+        <ul class="icon-list">
+          <li><span>🚚</span><div>Внутри МКАД — обычно в день заказа или в согласованное окно.</div></li>
+          <li><span>📍</span><div>За МКАД — по договорённости; всё обсудим перед оплатой.</div></li>
+          <li><span>⚖️</span><div>Сначала собираем заказ, сверяем вес, потом озвучиваем финальную сумму с доставкой.</div></li>
+        </ul>
+      </div>
+      <div class="highlight-box" style="margin-top:12px;">
+        <h3>Самовывоз</h3>
+        <p>Москва, ул. Тверская, 15. Ежедневно с 10:00 до 21:00.</p>
+        <p class="text-muted" style="margin-top:4px;">
+          Соберём заказ заранее, чтобы вы просто забрали пакет с уже подготовленными стейками.
+        </p>
+      </div>
+    </div>
+    <div id="about">
+      <h2 class="section-title">О магазине</h2>
+      <p class="section-subtitle">
+        Meat Shop Ferdinand Steaks — небольшая витрина конкретной партии стриплойна и рибая, с которой удобно работать поштучно.
+      </p>
+      <p class="text-muted" style="margin-bottom:8px;">
+        Все стейки в каталоге — реальная мраморная говядина с зерновым откормом: есть как более постные варианты, так и жирные «королевские» куски.[file:64]
+      </p>
+      <p class="text-muted">
+        Файл steaks.json хранит все характеристики: номер, вес, цену, мраморность и происхождение (сейчас Беларусь). При обновлении партии вы просто заменяете JSON — сайт подстраивается автоматически.[file:64]
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="contacts">
+  <div class="container columns-2">
+    <div>
+      <h2 class="section-title">Контакты</h2>
+      <p class="section-subtitle">
+        Удобнее всего общаться в мессенджерах — так проще согласовать заказ и обменяться фото.
+      </p>
+      <ul class="icon-list">
+        <li><span>📱</span><div>Телефон: +7 (999) 123-45-67</div></li>
+        <li><span>💬</span><div>Telegram / WhatsApp по этому же номеру.</div></li>
+        <li><span>📸</span><div>Перед оплатой вы получаете фото/видео именно тех стейков, которые добавили в корзину.</div></li>
+      </ul>
+    </div>
+    <div class="highlight-box">
+      <h3>Режим работы</h3>
+      <ul class="icon-list">
+        <li><span>🕒</span><div>Заказы: ежедневно с 10:00 до 21:00.</div></li>
+        <li><span>🔥</span><div>Доставка и самовывоз — по договорённости в удобное время.</div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<button id="cart-toggle" class="btn">Корзина (<span id="cart-count">0</span>)</button>
+<div id="cart">
+  <div id="cart-header">
+    <div>Ваш заказ</div>
+    <button id="cart-close">&times;</button>
+  </div>
+  <div id="cart-items">
+    <p style="font-size:13px;color:#777;">Корзина пуста. Выберите стейк в каталоге.</p>
+  </div>
+  <div id="cart-footer">
+    <div class="cart-totals">
+      <div><span>Вес</span><strong><span id="cart-total-weight">0</span> кг</strong></div>
+      <div style="text-align:right;"><span>Сумма за стейки</span><strong><span id="cart-total-price">0</span> ₽</strong></div>
+    </div>
+    <button id="cart-checkout" class="btn" style="width:100%;">Перейти к оформлению</button>
+    <div class="hint" style="margin-top:4px;">
+      Итоговую стоимость с доставкой мы подтвердим лично перед оплатой.
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container footer-inner">
+    <div>Meat Shop Ferdinand Steaks © 2026 • Стейки с прозрачностью и любовью</div>
+    <div class="footer-links">
+      <a href="#catalog">Каталог</a>
+      <a href="#delivery">Доставка</a>
+      <a href="#contacts">Контакты</a>
+    </div>
+  </div>
+</footer>
+
+<div id="lightbox" class="lightbox">
+  <div class="lightbox-backdrop"></div>
+  <div class="lightbox-content">
+    <button class="lightbox-close">&times;</button>
+    <button class="lightbox-prev">&#10094;</button>
+    <button class="lightbox-next">&#10095;</button>
+    <div class="lightbox-image-wrap">
+      <img id="lightbox-image" src="" alt="">
+    </div>
+    <div class="lightbox-caption">
+      <div id="lightbox-title"></div>
+      <div id="lightbox-meta"></div>
+      <div id="lightbox-comments"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let catalogData = [];
+  let cart = JSON.parse(localStorage.getItem('meatshop_cart')) || [];
+  let lightboxIndex = 0;
+
+  const categoryDescriptions = {
+    all: "",
+    striploin_choice: "Стриплойн — классический стейк с жирком по краю и разной степенью мраморности. В каталоге представлены номера из вашей текущей партии.[file:64]",
+    ribeye_choice: "Ribeye Choice — мраморный рибай с очень разным весом: от аккуратных порций до почти килограммовых кусков.[file:64]",
+    ribeye_prime: "Ribeye Prime — максимально мраморные стейки категории Prime для особых случаев.[file:64]"
+  };
+
+  const lightboxEl = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-image');
+  const lightboxTitle = document.getElementById('lightbox-title');
+  const lightboxMeta = document.getElementById('lightbox-meta');
+  const lightboxComments = document.getElementById('lightbox-comments');
+
+  async function loadSteaks() {
+    const container = document.getElementById('steaks-container');
+    try {
+      const res = await fetch('steaks.json?_=' + Date.now());
+      if (!res.ok) throw new Error('Не удалось загрузить steaks.json');
+      const data = await res.json();
+      if (!Array.isArray(data) || data.length === 0) {
+        container.innerHTML = '<p>Сейчас нет доступных стейков. Загляните позже.</p>';
+        document.getElementById('hero-available-count').textContent = '0';
+        return;
+      }
+      catalogData = data;
+      document.getElementById('hero-available-count').textContent = data.length.toString();
+      renderSteaks("all");
+    } catch (err) {
+      container.innerHTML = `<p style="color:red;">Ошибка загрузки ассортимента: ${err.message}</p>`;
+      document.getElementById('hero-available-count').textContent = '—';
+    }
+  }
+
+  function renderSteaks(category = "all") {
+    const container = document.getElementById('steaks-container');
+    const noteEl = document.getElementById('category-note');
+    let items = catalogData;
+    if (category !== 'all') items = catalogData.filter(s => s.category === category);
+
+    if (!items.length) {
+      container.innerHTML = '<p>В этой категории пока нет стейков. Попробуйте выбрать другую.</p>';
+    } else {
+      container.innerHTML = items.map(steak => `
+        <div class="steak-card"
+             data-id="${steak.id}"
+             data-index="${catalogData.findIndex(s => s.id === steak.id)}"
+             data-weight="${steak.weight_kg}"
+             data-price="${steak.total_price}">
+          <div class="steak-img-wrap">
+            <img src="${steak.photo_url}" alt="${steak.name}" class="steak-img" loading="lazy">
+            <div class="steak-tag">№ ${steak.position}</div>
+          </div>
+          <div class="steak-info">
+            <div class="steak-name">${steak.name}</div>
+            <div class="steak-meta-row">
+              <div>Вес: <strong>${steak.weight_kg} кг</strong></div>
+              <div>Цена за кг: <strong>${steak.price_per_kg.toLocaleString('ru-RU')} ₽</strong></div>
+            </div>
+            <div class="steak-meta-row">
+              <div>Итого: <strong>${steak.total_price.toLocaleString('ru-RU')} ₽</strong></div>
+              ${steak.origin ? `<div>Происхождение: <strong>${steak.origin}</strong></div>` : `<div></div>`}
+            </div>
+            ${steak.marbling ? `<div class="steak-meta-row"><div>Мраморность: <strong>${steak.marbling}</strong></div></div>` : ""}
+            ${steak.comments ? `<div class="steak-comments">${steak.comments}</div>` : `<div class="steak-comments"></div>`}
+            <div class="steak-bottom">
+              <div class="steak-price-total">
+                ${steak.total_price.toLocaleString('ru-RU')} ₽
+                <span>за ${steak.weight_kg} кг</span>
+              </div>
+              <button class="btn btn-small add-to-cart" data-id="${steak.id}">Добавить</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+    noteEl.textContent = categoryDescriptions[category] || "";
+
+    document.querySelectorAll('.add-to-cart').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const steakId = btn.getAttribute('data-id');
+        const steak = catalogData.find(s => s.id === steakId);
+        if (!steak) return;
+        addToCart({ id: steak.id, name: steak.name, weight: steak.weight_kg, price: steak.total_price });
+      });
+    });
+
+    document.querySelectorAll('.steak-img-wrap img').forEach(img => {
+      img.addEventListener('click', () => {
+        const card = img.closest('.steak-card');
+        const index = Number(card.dataset.index);
+        openLightbox(index);
+      });
+    });
+  }
+
+  const cartToggleBtn = document.getElementById('cart-toggle');
+  const navOpenCartBtn = document.getElementById('nav-open-cart');
+  const cartCloseBtn = document.getElementById('cart-close');
+  const cartEl = document.getElementById('cart');
+
+  function openCart() { cartEl.style.display = 'flex'; }
+  function closeCart() { cartEl.style.display = 'none'; }
+
+  cartToggleBtn.addEventListener('click', () => {
+    if (cartEl.style.display === 'flex') closeCart(); else openCart();
+  });
+  navOpenCartBtn.addEventListener('click', openCart);
+  cartCloseBtn.addEventListener('click', closeCart);
+
+  function addToCart(item) {
+    if (cart.some(x => x.id === item.id)) {
+      alert('Этот стейк уже в корзине.');
+      return;
+    }
+    cart.push(item);
+    localStorage.setItem('meatshop_cart', JSON.stringify(cart));
+    updateCartDisplay();
+    openCart();
+  }
+
+  function removeFromCart(id) {
+    cart = cart.filter(x => x.id !== id);
+    localStorage.setItem('meatshop_cart', JSON.stringify(cart));
+    updateCartDisplay();
+  }
+
+  function updateCartDisplay() {
+    const cartItemsEl = document.getElementById('cart-items');
+    const countEl = document.getElementById('cart-count');
+    const countTopEl = document.getElementById('cart-count-top');
+    const totalWeightEl = document.getElementById('cart-total-weight');
+    const totalPriceEl = document.getElementById('cart-total-price');
+
+    const count = cart.length;
+    countEl.textContent = count.toString();
+    countTopEl.textContent = count.toString();
+
+    if (count === 0) {
+      cartItemsEl.innerHTML = '<p style="font-size:13px;color:#777;">Корзина пуста. Выберите стейк в каталоге.</p>';
+      totalWeightEl.textContent = '0';
+      totalPriceEl.textContent = '0';
+      return;
+    }
+
+    let totalWeight = 0;
+    let totalPrice = 0;
+    cartItemsEl.innerHTML = cart.map(item => {
+      totalWeight += Number(item.weight);
+      totalPrice += Number(item.price);
+      return `
+        <div class="cart-item">
+          <div>
+            <div>${item.name}</div>
+            <small>${item.weight} кг • ${Number(item.price).toLocaleString('ru-RU')} ₽</small>
+          </div>
+          <button class="cart-remove" data-id="${item.id}">&times;</button>
+        </div>
+      `;
+    }).join('');
+
+    cartItemsEl.querySelectorAll('.cart-remove').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-id');
+        removeFromCart(id);
+      });
+    });
+
+    totalWeightEl.textContent = totalWeight.toFixed(2);
+    totalPriceEl.textContent = totalPrice.toLocaleString('ru-RU');
+  }
+
+  document.getElementById('cart-checkout').addEventListener('click', () => {
+    closeCart();
+    document.getElementById('order-form-section').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  const deliveryTypeEl = document.getElementById('delivery-type');
+  const courierFieldsEl = document.getElementById('courier-fields');
+  const pickupFieldsEl = document.getElementById('pickup-fields');
+  const orderResultEl = document.getElementById('order-result');
+
+  deliveryTypeEl.addEventListener('change', () => {
+    const val = deliveryTypeEl.value;
+    if (val === 'courier') {
+      courierFieldsEl.style.display = 'block';
+      pickupFieldsEl.style.display = 'none';
+    } else {
+      courierFieldsEl.style.display = 'none';
+      pickupFieldsEl.style.display = 'block';
+    }
+  });
+
+  document.getElementById('submit-order').addEventListener('click', () => {
+    const name = document.getElementById('customer-name').value.trim();
+    const phone = document.getElementById('customer-phone').value.trim();
+    const deliveryType = deliveryTypeEl.value;
+    const address = document.getElementById('delivery-address').value.trim();
+    const comment = document.getElementById('delivery-comment').value.trim();
+
+    if (!name || !phone) {
+      alert('Пожалуйста, заполните имя и телефон.');
+      return;
+    }
+    if (cart.length === 0) {
+      alert('Добавьте хотя бы один стейк в корзину.');
+      return;
+    }
+    if (deliveryType === 'courier' && !address) {
+      alert('Укажите адрес доставки.');
+      return;
+    }
+
+    const totalWeight = cart.reduce((s, x) => s + Number(x.weight), 0);
+    const totalPrice = cart.reduce((s, x) => s + Number(x.price), 0);
+
+    const lines = [
+      `Имя: ${name}`,
+      `Телефон: ${phone}`,
+      `Тип получения: ${deliveryType === 'courier' ? 'Курьер' : 'Самовывоз (м. Тверская)'}`,
+      deliveryType === 'courier' ? `Адрес: ${address}` : '',
+      comment ? `Комментарий: ${comment}` : '',
+      '',
+      `Стейков: ${cart.length}`,
+      `Общий вес: ${totalWeight.toFixed(2)} кг`,
+      `Сумма за стейки: ${totalPrice.toLocaleString('ru-RU')} ₽`,
+      '',
+      'Состав заказа:'
+    ].filter(Boolean);
+
+    cart.forEach(item => {
+      lines.push(`• ${item.name} — ${item.weight} кг, ${Number(item.price).toLocaleString('ru-RU')} ₽`);
+    });
+
+    const summaryText = lines.join('\n');
+
+    orderResultEl.style.color = '#444';
+    orderResultEl.innerHTML = 'Отправляем заказ...';
+
+    const templateParams = {
+      customer_name: name,
+      customer_phone: phone,
+      delivery_type: deliveryType === 'courier' ? 'Курьер' : 'Самовывоз',
+      delivery_address: deliveryType === 'courier' ? address : 'Самовывоз (м. Тверская)',
+      comment: comment || '-',
+      order_text: summaryText
+    };
+
+    emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+      .then(function() {
+        orderResultEl.style.color = '#1b5e20';
+        orderResultEl.innerHTML =
+          '✅ Заявка отправлена. В ближайшее время мы свяжемся с вами для подтверждения заказа.';
+      }, function() {
+        orderResultEl.style.color = '#b71c1c';
+        orderResultEl.innerHTML =
+          '❌ Не удалось отправить заявку автоматически. Скопируйте текст ниже и отправьте нам в мессенджер:<br>' +
+          '<textarea style="margin-top:6px;width:100%;min-height:160px;font-size:12px;">' +
+          summaryText +
+          '</textarea>';
+      });
+  });
+
+  function openLightbox(index) {
+    lightboxIndex = index;
+    const steak = catalogData[lightboxIndex];
+    if (!steak) return;
+
+    lightboxImg.src = steak.photo_url;
+    lightboxImg.alt = steak.name;
+    lightboxTitle.textContent = steak.name;
+
+    const originText = steak.origin ? `Происхождение: ${steak.origin}. ` : "";
+    const marblingText = steak.marbling ? `Мраморность: ${steak.marbling}. ` : "";
+    lightboxMeta.textContent =
+      `${originText}${marblingText}Вес ${steak.weight_kg} кг, цена за кг ${steak.price_per_kg.toLocaleString('ru-RU')} ₽, всего ${steak.total_price.toLocaleString('ru-RU')} ₽.`;
+    lightboxComments.textContent = steak.comments || "";
+    lightboxEl.classList.add('active');
+  }
+
+  function closeLightbox() {
+    lightboxEl.classList.remove('active');
+  }
+
+  function nextLightbox() {
+    if (!catalogData.length) return;
+    lightboxIndex = (lightboxIndex + 1) % catalogData.length;
+    openLightbox(lightboxIndex);
+  }
+
+  function prevLightbox() {
+    if (!catalogData.length) return;
+    lightboxIndex = (lightboxIndex - 1 + catalogData.length) % catalogData.length;
+    openLightbox(lightboxIndex);
+  }
+
+  document.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+  document.querySelector('.lightbox-backdrop').addEventListener('click', closeLightbox);
+  document.querySelector('.lightbox-next').addEventListener('click', nextLightbox);
+  document.querySelector('.lightbox-prev').addEventListener('click', prevLightbox);
+
+  document.addEventListener('keydown', (e) => {
+    if (!lightboxEl.classList.contains('active')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowRight') nextLightbox();
+    if (e.key === 'ArrowLeft') prevLightbox();
+  });
+
+  function scrollToCatalog() {
+    document.getElementById('catalog').scrollIntoView({ behavior: 'smooth' });
+  }
+  function scrollToDelivery() {
+    document.getElementById('delivery').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    loadSteaks();
+    updateCartDisplay();
+
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const category = btn.getAttribute('data-category');
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderSteaks(category);
+      });
+    });
+  });
+</script>
+</body>
+</html>
