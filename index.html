@@ -34,7 +34,7 @@
 
     header{
       background:radial-gradient(circle at top left,#b22222,#1a0a05);
-      color:#fff;padding:16px 0 12px;position:sticky;top:0;z-index:100;
+      color:#fff;padding:12px 0 10px;position:sticky;top:0;z-index:100;
       box-shadow:0 2px 10px rgba(0,0,0,0.35);
     }
     .container{width:94%;max-width:1200px;margin:0 auto}
@@ -70,7 +70,7 @@
 
     .hero{
       background:linear-gradient(135deg,#1a0a05 0%,#2d1009 40%,#8b0000 100%);
-      color:#fff;padding:28px 0 30px;
+      color:#fff;padding:24px 0 26px;
     }
     .hero-inner{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:28px;align-items:center}
     .hero-badge{
@@ -100,7 +100,7 @@
     .hero-card-title span:nth-child(2){font-size:12px;color:#f0d6b2;font-weight:500}
     .hero-card-img{
       height:160px;border-radius:12px;
-      background-image:url("SteaksF/IMG_20260310_203903.png"); /* любой стейк из набора[file:64] */
+      background-image:url("SteaksF/IMG_20260310_203903.png");
       background-size:cover;background-position:center;margin-bottom:10px;
       border:1px solid rgba(255,255,255,0.1);
     }
@@ -113,7 +113,7 @@
     }
     .hero-pill-dot{width:7px;height:7px;border-radius:50%;background:#4caf50}
 
-    .section{padding:32px 0 28px}
+    .section{padding:28px 0 24px}
     .section.alt{background:#fffdf8}
     .section-title{
       font-size:22px;margin-bottom:6px;color:var(--secondary);position:relative;text-align:left;
@@ -236,7 +236,6 @@
     .footer-links{display:flex;flex-wrap:wrap;gap:12px}
     .footer-links a{opacity:.85}
 
-    /* Лайтбокс */
     .lightbox{
       position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:2000;
     }
@@ -264,16 +263,94 @@
     .lightbox-prev{left:8px;top:50%;transform:translateY(-50%)}
     .lightbox-next{right:8px;top:50%;transform:translateY(-50%)}
 
-    @media(max-width:900px){
-      .hero-inner{grid-template-columns:minmax(0,1fr)}
-      .hero-right{order:-1}
-      .form-grid,.columns-2{grid-template-columns:minmax(0,1fr)}
-      #cart{right:8px;left:8px;width:auto;bottom:72px}
-      #cart-toggle{right:10px;bottom:10px}
-      .nav-links{display:none}
-      .nav-bar{align-items:flex-start}
-      .lightbox-content{grid-template-columns:minmax(0,1fr);max-height:90vh}
-      .lightbox-prev,.lightbox-next{top:auto;bottom:8px}
+    /* Мобильные правки */
+    @media (max-width: 900px) {
+      body {
+        font-size: 15px;
+      }
+      .container {
+        width: 96%;
+      }
+      .nav-links {
+        display: none;
+      }
+      .logo-text-sub {
+        display: none;
+      }
+      .hero-inner {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 18px;
+      }
+      .hero-right {
+        order: -1;
+        justify-self: stretch;
+      }
+      .hero-card {
+        max-width: 100%;
+      }
+      .hero-title {
+        font-size: 26px;
+      }
+      .hero-subtitle {
+        font-size: 13px;
+        max-width: 100%;
+      }
+      .steaks-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 14px;
+      }
+      .steak-img {
+        height: 190px;
+      }
+      .form-grid,
+      .columns-2 {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 18px;
+      }
+      #cart {
+        left: 8px;
+        right: 8px;
+        bottom: 72px;
+        width: auto;
+        max-height: 65vh;
+      }
+      #cart-toggle {
+        right: 10px;
+        bottom: 10px;
+      }
+      .lightbox-content {
+        grid-template-columns: minmax(0,1fr);
+        max-height: 90vh;
+      }
+      .lightbox-prev,
+      .lightbox-next {
+        top: auto;
+        bottom: 8px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title {
+        font-size: 22px;
+      }
+      .hero-card-img {
+        height: 150px;
+      }
+      .steak-info {
+        padding: 10px 12px;
+      }
+      .steak-name {
+        font-size: 14px;
+      }
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .hero-actions .btn {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+      }
     }
   </style>
 </head>
@@ -353,7 +430,7 @@
   <div class="container">
     <h2 class="section-title">Каталог стейков</h2>
     <p class="section-subtitle">
-      Все позиции ниже подтягиваются из файла steaks.json. Номера, веса, цены и описания уже совпадают с вашей таблицей и фотографиями.
+      Все позиции ниже подтягиваются из файла steaks.json. Номера, веса, цены и описания совпадают с таблицей и фотографиями.
     </p>
 
     <div class="catalog-filters">
@@ -361,7 +438,6 @@
       <button class="filter-btn" data-category="striploin_choice">Стриплойн</button>
       <button class="filter-btn" data-category="ribeye_choice">Ribeye Choice</button>
       <button class="filter-btn" data-category="ribeye_prime">Ribeye Prime</button>
-      <!-- при появлении других категорий (filet_mignon, everyday) их можно добавить здесь -->
     </div>
     <div class="catalog-note" id="category-note"></div>
 
@@ -419,7 +495,7 @@
         <div class="form-group" style="margin-top:12px;">
           <button id="submit-order" class="btn" style="width:100%;">Отправить заявку</button>
           <div class="hint" style="margin-top:4px;">
-            Заявка придёт вам на почту через EmailJS. При ошибке мы покажем текст заказа, который можно вручную отправить в мессенджер.
+            Заявка придёт вам на почту через EmailJS. При ошибке покажем текст заказа, который можно вручную отправить в мессенджер.
           </div>
         </div>
         <div id="order-result" style="margin-top:8px;font-size:13px;"></div>
@@ -432,7 +508,7 @@
           <li>После согласования суммы отправляем ссылку на оплату и организуем доставку.</li>
         </ul>
         <p>
-          Номера в каталоге (например, «Ribeye Prime #529» или «Стриплойн #347») совпадают с теми, что у вас в Excel — поэтому легко сверяться с исходной таблицей.[file:64]
+          Номера в каталоге (например, «Ribeye Prime #529» или «Стриплойн #347») совпадают с теми, что у вас в Excel — поэтому легко сверяться с исходной таблицей.
         </p>
       </aside>
     </div>
@@ -468,10 +544,10 @@
         Meat Shop Ferdinand Steaks — небольшая витрина конкретной партии стриплойна и рибая, с которой удобно работать поштучно.
       </p>
       <p class="text-muted" style="margin-bottom:8px;">
-        Все стейки в каталоге — реальная мраморная говядина с зерновым откормом: есть как более постные варианты, так и жирные «королевские» куски.[file:64]
+        Все стейки в каталоге — реальная мраморная говядина с зерновым откормом: есть как более постные варианты, так и жирные «королевские» куски.
       </p>
       <p class="text-muted">
-        Файл steaks.json хранит все характеристики: номер, вес, цену, мраморность и происхождение (сейчас Беларусь). При обновлении партии вы просто заменяете JSON — сайт подстраивается автоматически.[file:64]
+        Файл steaks.json хранит все характеристики: номер, вес, цену, мраморность и происхождение. При обновлении партии вы просто заменяете JSON — сайт подстраивается автоматически.
       </p>
     </div>
   </div>
@@ -556,9 +632,9 @@
 
   const categoryDescriptions = {
     all: "",
-    striploin_choice: "Стриплойн — классический стейк с жирком по краю и разной степенью мраморности. В каталоге представлены номера из вашей текущей партии.[file:64]",
-    ribeye_choice: "Ribeye Choice — мраморный рибай с очень разным весом: от аккуратных порций до почти килограммовых кусков.[file:64]",
-    ribeye_prime: "Ribeye Prime — максимально мраморные стейки категории Prime для особых случаев.[file:64]"
+    striploin_choice: "Стриплойн — классический стейк с жирком по краю и разной степенью мраморности.",
+    ribeye_choice: "Ribeye Choice — мраморный рибай с разным весом: от аккуратных порций до почти килограммовых кусков.",
+    ribeye_prime: "Ribeye Prime — максимально мраморные стейки категории Prime для особых случаев."
   };
 
   const lightboxEl = document.getElementById('lightbox');
