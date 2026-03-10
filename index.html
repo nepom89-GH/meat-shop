@@ -4,15 +4,10 @@
   <meta charset="UTF-8" />
   <title>Meat Shop | Steaks — Стейки премиум-класса</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="description" content="Стриплойн, рибай Prime и Choice с честным весом и реальными фото. Выберите конкретный стейк по номеру." />
-
-  <link rel="icon" type="image/png" href="logo.png" />
-
+  
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script>
-    (function() {
-      emailjs.init("YOUR_PUBLIC_KEY"); /* подставь свой public key */
-    })();
+    (function() { emailjs.init("YOUR_PUBLIC_KEY"); })();
   </script>
 
   <style>
@@ -20,158 +15,158 @@
       --primary: #8b0000;
       --secondary: #d32f2f;
       --accent: #f5c26b;
-      --light: #fff9f0;
-      --dark: #1a0a05;
-      --text-muted: #6f6f6f;
-      --border-radius: 12px;
-      --shadow-soft: 0 4px 16px rgba(0,0,0,0.12);
-      /* Увеличенный базовый шрифт */
-      --base-font-size: 20px; 
-    }
-    
-    * {
-      margin: 0; 
-      padding: 0; 
-      box-sizing: border-box; 
-      font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, "Roboto", sans-serif;
+      --dark: #120805;
+      --light: #fffcf9;
+      --bg-card: #ffffff;
+      /* Увеличенный шрифт на ~30% */
+      --fs-body: 21px; 
+      --fs-h1: 48px;
+      --fs-h2: 36px;
     }
 
-    html, body {
-      width: 100%;
-      overflow-x: hidden; /* Убирает горизонтальный скролл */
-      background: var(--light);
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--light);
       color: var(--dark);
-      line-height: 1.5;
-      font-size: var(--base-font-size);
+      font-size: var(--fs-body);
+      line-height: 1.6;
+      overflow-x: hidden; /* Защита от горизонтального скролла */
+      width: 100%;
     }
 
-    a { text-decoration: none; color: inherit; }
-    img { max-width: 100%; display: block; }
+    .container { width: 92%; max-width: 1200px; margin: 0 auto; }
 
+    /* Header */
     header {
-      background: radial-gradient(circle at top left, #b22222, #1a0a05);
-      color: #fff; padding: 15px 0; position: sticky; top: 0; z-index: 100;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.35);
+      background: var(--dark);
+      color: #fff;
+      padding: 20px 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
     }
+    .nav-bar { display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-weight: 800; font-size: 26px; color: #fff; text-transform: uppercase; letter-spacing: 1px; }
+    .logo span { color: var(--secondary); }
     
-    .container {
-      width: 92%; 
-      max-width: 1200px; 
-      margin: 0 auto;
+    .nav-links { display: flex; gap: 25px; }
+    .nav-links a { color: #fff; text-decoration: none; font-size: 18px; transition: 0.3s; opacity: 0.9; }
+    .nav-links a:hover { color: var(--accent); opacity: 1; }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(rgba(18,8,5,0.85), rgba(18,8,5,0.85)), url('https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=2069&auto=format&fit=crop') center/cover;
+      color: #fff;
+      padding: 100px 0;
+      text-align: center;
     }
-
-    .nav-bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-    .logo-block { display: flex; align-items: center; gap: 12px; }
-    .logo-mark { width: 45px; height: 45px; }
-    .logo-text-main { font-size: 24px; font-weight: 800; letter-spacing: -0.01em; }
-    .logo-text-sub { font-size: 14px; opacity: .8; }
-
-    .nav-links { display: flex; gap: 20px; font-size: 16px; }
-    .nav-links a { position: relative; font-weight: 500; }
-    .nav-actions { display: flex; align-items: center; gap: 15px; }
-    .nav-phone { font-size: 14px; text-align: right; line-height: 1.2; }
-    .nav-phone strong { font-size: 18px; white-space: nowrap; }
+    .hero h1 { font-size: var(--fs-h1); margin-bottom: 20px; line-height: 1.1; }
+    .hero p { max-width: 700px; margin: 0 auto 30px; opacity: 0.9; }
 
     .btn {
-      background: var(--primary); color: #fff; border: none; padding: 12px 22px;
-      border-radius: 30px; cursor: pointer; font-weight: 700; font-size: 16px;
-      transition: all .2s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      display: inline-block;
+      padding: 16px 32px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: 0.3s;
+      font-size: 18px;
     }
-    .btn:hover { background: #a50000; transform: translateY(-2px); }
-    .btn-secondary { background: transparent; border: 2px solid rgba(255,255,255,.6); box-shadow: none; }
-    .btn-small { padding: 8px 16px; font-size: 14px; }
-
-    /* Hero Section */
-    .hero {
-      background: linear-gradient(135deg, #1a0a05 0%, #2d1009 40%, #8b0000 100%);
-      color: #fff; padding: 40px 0;
-    }
-    .hero-inner { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: center; }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px; font-size: 14px; padding: 6px 14px;
-      border-radius: 20px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.15); margin-bottom: 15px;
-    }
-    .hero-title { font-size: 42px; line-height: 1.1; margin-bottom: 20px; }
-    .hero-subtitle { font-size: 18px; color: #f3e2d2; margin-bottom: 25px; max-width: 500px; }
-    
-    .hero-card {
-      background: rgba(0,0,0,.4); border-radius: 20px; padding: 20px;
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-    .hero-card-img {
-      width: 100%; height: 200px; border-radius: 12px; margin-bottom: 15px;
-      background: url('SteaksF/IMG_20260310_203903.png') center/cover;
-    }
+    .btn:hover { background: var(--secondary); transform: translateY(-2px); }
 
     /* Catalog */
-    .section { padding: 50px 0; }
-    .section-title { font-size: 32px; color: var(--secondary); margin-bottom: 15px; }
-    .catalog-filters { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
-    .filter-btn {
-      padding: 8px 18px; border-radius: 20px; border: 1px solid #ddd; background: #fff;
-      cursor: pointer; font-size: 16px; transition: 0.2s;
-    }
-    .filter-btn.active { background: var(--secondary); color: #fff; border-color: var(--secondary); }
-
-    .steaks-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px;
-    }
-    .steak-card {
-      background: #fff; border-radius: var(--border-radius); box-shadow: var(--shadow-soft);
-      overflow: hidden; transition: 0.3s;
-    }
-    .steak-card:hover { transform: translateY(-5px); }
-    .steak-img-wrap { position: relative; aspect-ratio: 4/3; overflow: hidden; cursor: pointer; }
-    .steak-img { width: 100%; height: 100%; object-fit: cover; }
+    .section { padding: 80px 0; }
+    .section-title { font-size: var(--fs-h2); margin-bottom: 40px; text-align: center; color: var(--primary); }
     
-    .steak-info { padding: 20px; }
-    .steak-name { font-size: 22px; font-weight: 700; margin-bottom: 10px; }
-    .steak-meta-row { display: flex; justify-content: space-between; font-size: 15px; margin-bottom: 5px; color: var(--text-muted); }
-    .steak-price-total { font-size: 24px; font-weight: 800; color: var(--dark); }
+    .filters { display: flex; justify-content: center; gap: 10px; margin-bottom: 40px; flex-wrap: wrap; }
+    .filter-btn {
+      padding: 10px 20px;
+      border: 2px solid var(--primary);
+      background: transparent;
+      color: var(--primary);
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+    .filter-btn.active { background: var(--primary); color: #fff; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 30px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      transition: 0.3s;
+    }
+    .card:hover { transform: translateY(-10px); }
+    .card-img { width: 100%; aspect-ratio: 4/3; object-fit: cover; cursor: pointer; }
+    .card-content { padding: 25px; }
+    .card-title { font-size: 24px; margin-bottom: 10px; font-weight: 700; }
+    .card-price { font-size: 28px; color: var(--primary); font-weight: 800; margin: 15px 0; }
+    .card-meta { font-size: 16px; color: #666; display: flex; justify-content: space-between; }
+
+    /* Delivery Section */
+    .delivery-section { background: #f0ebe6; }
+    .delivery-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px; text-align: center; }
+    .delivery-item h3 { color: var(--primary); margin-bottom: 15px; }
 
     /* Lightbox */
     .lightbox {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000;
-      display: none; align-items: center; justify-content: center; padding: 20px;
+      position: fixed; top:0; left:0; width:100%; height:100%;
+      background: rgba(0,0,0,0.95);
+      display: none; justify-content: center; align-items: center; z-index: 2000;
     }
     .lightbox.active { display: flex; }
     .lightbox-content {
-      max-width: 1000px; width: 100%; display: grid; grid-template-columns: 1.5fr 1fr;
-      background: #fff; border-radius: 20px; overflow: hidden; color: var(--dark);
-      position: relative;
+      position: relative; max-width: 900px; width: 95%; background: #fff;
+      border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;
     }
-    .lightbox-image-wrap { background: #000; display: flex; align-items: center; }
-    .lightbox-image-wrap img { width: 100%; height: auto; max-height: 80vh; object-fit: contain; }
-    .lightbox-info { padding: 30px; display: flex; flex-direction: column; gap: 15px; }
-    .lightbox-close {
-      position: absolute; top: 15px; right: 20px; font-size: 35px; cursor: pointer; z-index: 10;
+    .lightbox-img { width: 100%; max-height: 60vh; object-fit: contain; background: #000; }
+    .lightbox-details { padding: 30px; }
+    .nav-btn {
+      position: absolute; top: 40%; transform: translateY(-50%);
+      background: rgba(255,255,255,0.2); color: #fff; border: none;
+      padding: 20px; cursor: pointer; font-size: 30px; border-radius: 50%;
+    }
+    .nav-btn:hover { background: var(--primary); }
+    .prev-btn { left: 20px; }
+    .next-btn { right: 20px; }
+    .close-btn { position: absolute; top: 20px; right: 20px; color: #fff; font-size: 40px; cursor: pointer; z-index: 2100; }
+
+    /* Cart UI */
+    #cart-panel {
+      position: fixed; right: -400px; top: 0; width: 380px; height: 100%;
+      background: #fff; z-index: 1500; transition: 0.4s; padding: 30px;
+      box-shadow: -10px 0 30px rgba(0,0,0,0.2);
+    }
+    #cart-panel.open { right: 0; }
+    .cart-btn-fixed {
+      position: fixed; bottom: 30px; right: 30px; z-index: 1100;
+      padding: 20px; border-radius: 50%; width: 70px; height: 70px;
     }
 
-    /* Cart */
-    #cart {
-      position: fixed; right: 20px; bottom: 80px; width: 380px;
-      background: #fff; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-      display: none; flex-direction: column; z-index: 1000; border: 1px solid #ddd;
-    }
-    #cart-toggle { position: fixed; right: 20px; bottom: 20px; z-index: 1001; }
-
-    /* Forms */
-    input, textarea, select { font-size: 18px !important; padding: 12px !important; }
-
-    /* MOBILE ADAPTATION */
-    @media (max-width: 850px) {
-      :root { --base-font-size: 18px; }
-      .hero-inner { grid-template-columns: 1fr; text-align: center; }
-      .hero-subtitle { margin: 0 auto 25px; }
-      .hero-right { display: none; } /* Убираем блок с примером на мобилках по просьбе */
-      .nav-links, .nav-phone div { display: none; }
-      .logo-text-main { font-size: 20px; }
-      
-      .steaks-grid { grid-template-columns: 1fr; }
-      .lightbox-content { grid-template-columns: 1fr; max-height: 95vh; overflow-y: auto; }
-      .lightbox-info { padding: 20px; }
-      
-      #cart { left: 10px; right: 10px; width: auto; bottom: 90px; }
+    /* Mobile */
+    @media (max-width: 768px) {
+      :root { --fs-body: 19px; --fs-h1: 32px; --fs-h2: 28px; }
+      .nav-links { display: none; }
+      .hero { padding: 60px 0; }
+      .delivery-grid { grid-template-columns: 1fr; }
+      .card-title { font-size: 20px; }
+      .nav-btn { padding: 10px; font-size: 20px; top: 30%; }
+      #cart-panel { width: 100%; right: -100%; }
     }
   </style>
 </head>
@@ -179,241 +174,177 @@
 
 <header>
   <div class="container nav-bar">
-    <div class="logo-block">
-      <div class="logo-mark"><img src="logo.png" alt="Meat Shop"></div>
-      <div>
-        <div class="logo-text-main">Meat Shop | Steaks</div>
-        <div class="logo-text-sub">стейки премиум-класса • Москва</div>
-      </div>
-    </div>
+    <div class="logo">Meat Shop <span>| Steaks</span></div>
     <nav class="nav-links">
       <a href="#catalog">Каталог</a>
       <a href="#delivery">Доставка</a>
-      <a href="#contacts">Контакты</a>
+      <a href="#order">Заказать</a>
     </nav>
-    <div class="nav-actions">
-      <div class="nav-phone">
-        <strong>+7 (999) 123-45-67</strong>
-      </div>
-      <button id="nav-open-cart" class="btn btn-secondary btn-small">Корзина (<span id="cart-count-top">0</span>)</button>
-    </div>
+    <button class="btn" onclick="toggleCart()" style="padding: 10px 20px; font-size: 16px;">Корзина (<span id="cart-count">0</span>)</button>
   </div>
 </header>
 
 <section class="hero">
-  <div class="container hero-inner">
-    <div>
-      <div class="hero-badge"><span>✓</span> Реальные фото именно вашего стейка</div>
-      <h1 class="hero-title">Стейки как в лучшем ресторане у вас дома</h1>
-      <p class="hero-subtitle">
-        Выбирайте конкретный отруб по весу и мраморности. Мы привезем именно тот кусок, который вы видите на экране.
-      </p>
-      <div class="hero-actions">
-        <button class="btn" onclick="scrollToCatalog()">Выбрать стейк</button>
-      </div>
-    </div>
-    <div class="hero-right">
-      <div class="hero-card">
-        <div class="hero-card-img"></div>
-        <div style="font-size: 14px; color: #f3e2d2;">Пример куска из текущей партии. Мы пришлем фото вашего заказа в мессенджер перед отправкой.</div>
-      </div>
-    </div>
+  <div class="container">
+    <h1>Честный вес. Реальные фото. <br>Идеальный стейк.</h1>
+    <p>Мы фотографируем каждый кусок, чтобы вы выбрали именно ту мраморность, которая вам по душе.</p>
+    <a href="#catalog" class="btn">Перейти в каталог</a>
   </div>
 </section>
 
-<section class="section" id="catalog">
+<section id="catalog" class="section">
   <div class="container">
-    <h2 class="section-title">Каталог стейков</h2>
-    <div class="catalog-filters">
-      <button class="filter-btn active" data-category="all">Все</button>
-      <button class="filter-btn" data-category="striploin_choice">Стриплойн</button>
-      <button class="filter-btn" data-category="ribeye_choice">Ribeye Choice</button>
-      <button class="filter-btn" data-category="ribeye_prime">Ribeye Prime</button>
+    <h2 class="section-title">Наше Мясо</h2>
+    <div class="filters">
+      <button class="filter-btn active" onclick="filterSteaks('all', this)">Все</button>
+      <button class="filter-btn" onclick="filterSteaks('ribeye_choice', this)">Ribeye Choice</button>
+      <button class="filter-btn" onclick="filterSteaks('ribeye_prime', this)">Ribeye Prime</button>
+      <button class="filter-btn" onclick="filterSteaks('striploin_choice', this)">Стриплойн</button>
     </div>
-    <div id="steaks-container" class="steaks-grid">
-      <p>Загрузка стейков...</p>
+    <div id="steak-grid" class="grid">
+      </div>
+  </div>
+</section>
+
+<section id="delivery" class="section delivery-section">
+  <div class="container">
+    <h2 class="section-title">Доставка и оплата</h2>
+    <div class="delivery-grid">
+      <div class="delivery-item">
+        <h3>Доставка</h3>
+        <p>Доставляем по Москве и МО в течение 2-х часов. При заказе от 5000₽ — бесплатно.</p>
+      </div>
+      <div class="delivery-item">
+        <h3>Выбор</h3>
+        <p>Перед отправкой мы пришлем фото выбранного стейка в WhatsApp для подтверждения.</p>
+      </div>
+      <div class="delivery-item">
+        <h3>Оплата</h3>
+        <p>Оплата курьеру картой или наличными при получении вашего заказа.</p>
+      </div>
     </div>
   </div>
 </section>
 
 <div id="lightbox" class="lightbox">
+  <span class="close-btn" onclick="closeLightbox()">&times;</span>
+  <button class="nav-btn prev-btn" onclick="changeSteak(-1)">&#10094;</button>
+  <button class="nav-btn next-btn" onclick="changeSteak(1)">&#10095;</button>
+  
   <div class="lightbox-content">
-    <span class="lightbox-close">&times;</span>
-    <div class="lightbox-image-wrap">
-      <img id="lightbox-image" src="" alt="">
-    </div>
-    <div class="lightbox-info">
-      <h2 id="lightbox-title" style="font-size: 28px; color: var(--primary);"></h2>
-      <div id="lightbox-meta" style="font-weight: 600;"></div>
-      <div id="lightbox-comments" style="font-style: italic; color: var(--text-muted);"></div>
-      <hr style="border: 0; border-top: 1px solid #eee; margin: 10px 0;">
-      <button id="lightbox-add-to-cart-btn" class="btn">Добавить в корзину</button>
+    <img id="lb-img" class="lightbox-img" src="" alt="">
+    <div class="lightbox-details">
+      <h2 id="lb-title"></h2>
+      <p id="lb-desc" style="margin: 15px 0; color: #555;"></p>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div id="lb-price" style="font-size: 32px; font-weight: 800; color: var(--primary);"></div>
+        <button id="lb-add-btn" class="btn">В корзину</button>
+      </div>
     </div>
   </div>
 </div>
 
-<button id="cart-toggle" class="btn">Корзина (<span id="cart-count">0</span>)</button>
-<div id="cart">
-  <div style="background: var(--dark); color: #fff; padding: 15px; display: flex; justify-content: space-between; border-radius: 20px 20px 0 0;">
-    <span>Ваш заказ</span>
-    <button id="cart-close" style="background: none; border: none; color: #fff; cursor: pointer; font-size: 20px;">&times;</button>
-  </div>
-  <div id="cart-items" style="padding: 15px; max-height: 400px; overflow-y: auto;"></div>
-  <div style="padding: 15px; background: #f9f9f9; border-radius: 0 0 20px 20px;">
-    <div style="display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 15px;">
+<div id="cart-panel">
+  <h2>Ваш заказ</h2>
+  <hr style="margin: 20px 0;">
+  <div id="cart-items" style="max-height: 60vh; overflow-y: auto;"></div>
+  <div style="margin-top: 20px;">
+    <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 24px;">
       <span>Итого:</span>
-      <span><span id="cart-total-price">0</span> ₽</span>
+      <span id="cart-total">0 ₽</span>
     </div>
-    <button class="btn" style="width: 100%;" onclick="scrollToForm()">Оформить заказ</button>
+    <button class="btn" style="width: 100%; margin-top: 20px;" onclick="alert('Оформление...')">Оформить заказ</button>
+    <button class="btn" style="width: 100%; margin-top: 10px; background: #ccc;" onclick="toggleCart()">Закрыть</button>
   </div>
 </div>
-
-<section class="section" id="order-form-section" style="background: #fff;">
-  <div class="container" style="max-width: 600px;">
-    <h2 class="section-title" style="text-align: center;">Оформление</h2>
-    <div style="display: flex; flex-direction: column; gap: 15px;">
-      <input type="text" id="customer-name" placeholder="Ваше имя">
-      <input type="tel" id="customer-phone" placeholder="Телефон">
-      <textarea id="delivery-address" placeholder="Адрес доставки"></textarea>
-      <button id="submit-order" class="btn">Отправить заявку</button>
-      <div id="order-result" style="text-align: center; font-weight: 600;"></div>
-    </div>
-  </div>
-</section>
 
 <script>
-  let catalogData = [];
-  let cart = JSON.parse(localStorage.getItem('meatshop_cart')) || [];
-  let currentSteakInLightbox = null;
+  let steaks = [];
+  let cart = [];
+  let currentIndex = 0;
+  let currentFiltered = [];
 
-  async function loadSteaks() {
+  async function init() {
     try {
-      const res = await fetch('steaks.json?_=' + Date.now());
-      catalogData = await res.json();
-      renderSteaks("all");
-    } catch (err) {
-      console.error("Ошибка загрузки данных", err);
-    }
+      const response = await fetch('steaks.json');
+      steaks = await response.json();
+      currentFiltered = steaks;
+      render(steaks);
+    } catch (e) { console.error("Ошибка загрузки JSON", e); }
   }
 
-  function renderSteaks(category) {
-    const container = document.getElementById('steaks-container');
-    const filtered = category === "all" ? catalogData : catalogData.filter(s => s.category === category);
-    
-    container.innerHTML = filtered.map(steak => `
-      <div class="steak-card">
-        <div class="steak-img-wrap" onclick="openLightbox('${steak.id}')">
-          <img src="${steak.photo_url}" class="steak-img" loading="lazy">
-          <div style="position:absolute; top:10px; left:10px; background:rgba(0,0,0,0.7); color:#fff; padding:4px 10px; border-radius:10px; font-size:14px;">№ ${steak.position}</div>
-        </div>
-        <div class="steak-info">
-          <div class="steak-name">${steak.name}</div>
-          <div class="steak-meta-row"><span>Вес:</span> <strong>${steak.weight_kg} кг</strong></div>
-          <div class="steak-meta-row"><span>Цена/кг:</span> <strong>${steak.price_per_kg} ₽</strong></div>
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:15px;">
-            <div class="steak-price-total">${steak.total_price.toLocaleString()} ₽</div>
-            <button class="btn btn-small" onclick="addToCart('${steak.id}')">В корзину</button>
+  function render(data) {
+    const grid = document.getElementById('steak-grid');
+    grid.innerHTML = data.map((s, index) => `
+      <div class="card">
+        <img src="${s.photo_url}" class="card-img" onclick="openLightbox(${index})">
+        <div class="card-content">
+          <div class="card-title">${s.name}</div>
+          <div class="card-meta">
+            <span>Вес: ${s.weight_kg} кг</span>
+            <span>Мраморность: ${s.marbling}</span>
           </div>
+          <div class="card-price">${s.total_price} ₽</div>
+          <button class="btn" style="width: 100%;" onclick="addToCart('${s.id}')">В корзину</button>
         </div>
       </div>
     `).join('');
   }
 
-  function openLightbox(id) {
-    const steak = catalogData.find(s => s.id === id);
-    if (!steak) return;
-    currentSteakInLightbox = steak;
-    
-    document.getElementById('lightbox-image').src = steak.photo_url;
-    document.getElementById('lightbox-title').textContent = steak.name;
-    document.getElementById('lightbox-meta').innerHTML = `Вес: ${steak.weight_kg} кг | Цена: ${steak.total_price} ₽`;
-    document.getElementById('lightbox-comments').textContent = steak.comments || "";
+  function filterSteaks(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFiltered = cat === 'all' ? steaks : steaks.filter(s => s.category === cat);
+    render(currentFiltered);
+  }
+
+  function openLightbox(index) {
+    currentIndex = index;
+    const s = currentFiltered[currentIndex];
+    document.getElementById('lb-img').src = s.photo_url;
+    document.getElementById('lb-title').innerText = s.name;
+    document.getElementById('lb-desc').innerText = s.comments || "Прекрасный выбор для идеального ужина.";
+    document.getElementById('lb-price').innerText = s.total_price + ' ₽';
+    document.getElementById('lb-add-btn').onclick = () => addToCart(s.id);
     document.getElementById('lightbox').classList.add('active');
   }
 
-  // Кнопка добавления из лайтбокса
-  document.getElementById('lightbox-add-to-cart-btn').onclick = () => {
-    if (currentSteakInLightbox) {
-      addToCart(currentSteakInLightbox.id);
-      document.getElementById('lightbox').classList.remove('active');
-    }
-  };
+  function changeSteak(dir) {
+    currentIndex += dir;
+    if (currentIndex < 0) currentIndex = currentFiltered.length - 1;
+    if (currentIndex >= currentFiltered.length) currentIndex = 0;
+    openLightbox(currentIndex);
+  }
 
-  document.querySelector('.lightbox-close').onclick = () => {
-    document.getElementById('lightbox').classList.remove('active');
-  };
+  function closeLightbox() { document.getElementById('lightbox').classList.remove('active'); }
 
   function addToCart(id) {
-    if (cart.some(item => item.id === id)) {
-      alert("Этот стейк уже в корзине");
-      return;
+    const steak = steaks.find(s => s.id === id);
+    if (!cart.find(item => item.id === id)) {
+      cart.push(steak);
+      updateCartUI();
+    } else {
+      alert("Этот кусок уже в корзине!");
     }
-    const steak = catalogData.find(s => s.id === id);
-    cart.push({ id: steak.id, name: steak.name, price: steak.total_price, weight: steak.weight_kg });
-    updateCart();
   }
 
-  function updateCart() {
-    localStorage.setItem('meatshop_cart', JSON.stringify(cart));
-    const container = document.getElementById('cart-items');
-    const totalEl = document.getElementById('cart-total-price');
-    const countTop = document.getElementById('cart-count-top');
-    const countBottom = document.getElementById('cart-count');
-
-    countTop.textContent = cart.length;
-    countBottom.textContent = cart.length;
-
-    if (cart.length === 0) {
-      container.innerHTML = "<p>Корзина пуста</p>";
-      totalEl.textContent = "0";
-      return;
-    }
-
+  function updateCartUI() {
+    document.getElementById('cart-count').innerText = cart.length;
+    const itemsCont = document.getElementById('cart-items');
     let total = 0;
-    container.innerHTML = cart.map(item => {
-      total += item.price;
-      return `
-        <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:16px; border-bottom:1px solid #eee; padding-bottom:5px;">
-          <div>${item.name} (${item.weight}кг)</div>
-          <div style="font-weight:700;">${item.price} ₽ <span style="cursor:pointer; color:red; margin-left:10px;" onclick="removeFromCart('${item.id}')">&times;</span></div>
-        </div>
-      `;
+    itemsCont.innerHTML = cart.map(item => {
+      total += item.total_price;
+      return `<div style="display:flex; justify-content:space-between; margin-bottom:15px;">
+        <span>${item.name}</span>
+        <b>${item.total_price} ₽</b>
+      </div>`;
     }).join('');
-    totalEl.textContent = total.toLocaleString();
+    document.getElementById('cart-total').innerText = total + ' ₽';
   }
 
-  function removeFromCart(id) {
-    cart = cart.filter(i => i.id !== id);
-    updateCart();
-  }
+  function toggleCart() { document.getElementById('cart-panel').classList.toggle('open'); }
 
-  function scrollToCatalog() { document.getElementById('catalog').scrollIntoView({ behavior: 'smooth' }); }
-  function scrollToForm() { 
-    document.getElementById('cart').style.display = 'none';
-    document.getElementById('order-form-section').scrollIntoView({ behavior: 'smooth' }); 
-  }
-
-  // Управление корзиной
-  document.getElementById('cart-toggle').onclick = () => {
-    const c = document.getElementById('cart');
-    c.style.display = (c.style.display === 'flex') ? 'none' : 'flex';
-  };
-  document.getElementById('cart-close').onclick = () => document.getElementById('cart').style.display = 'none';
-  document.getElementById('nav-open-cart').onclick = () => document.getElementById('cart').style.display = 'flex';
-
-  // Фильтры
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.onclick = () => {
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      renderSteaks(btn.dataset.category);
-    };
-  });
-
-  document.addEventListener('DOMContentLoaded', () => {
-    loadSteaks();
-    updateCart();
-  });
+  init();
 </script>
 
 </body>
